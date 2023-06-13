@@ -1,0 +1,19 @@
+{
+  "name": "fm.interactivecardform",
+  "version": "1.0.0",
+  "description": "InteractiveCardForm for FrontendMentor Challenge",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cristianoso19/fm.InteractiveCardForm.git"
+  },
+  "author": "cristianoso19",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cristianoso19/fm.InteractiveCardForm/issues"
+  },
+  "homepage": "https://github.com/cristianoso19/fm.InteractiveCardForm#readme"
+}
