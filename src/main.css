@@ -6,8 +6,8 @@
     @apply absolute bg-contain bg-no-repeat bg-center h-40 w-[18rem] 
 }
 .label { 
-    @apply block uppercase text-sm tracking-wider
+    @apply block uppercase text-xs tracking-[.18em] font-bold
 }
 .input-text {
-    @apply text-base mt-1 px-4 tracking-wide border rounded-lg w-full h-10 border-slate-200 placeholder-slate-300 
+    @apply text-lg mt-2 px-4 tracking-wide border rounded-lg w-full h-11 border-slate-200 placeholder-slate-300 
 }
