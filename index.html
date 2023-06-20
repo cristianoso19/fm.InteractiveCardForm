@@ -17,7 +17,7 @@
 <body class="text-lg">
   <main class="h-screen flex flex-col">
     <section class="relative h-1/3 bg-hero bg-cover bg-center bg-no-repeat z-0 text-white">
-      <div class="absolute bg-frontCard bg-contain bg-no-repeat bg-center h-40 w-[18rem] top-32 left-4  z-20 p-5">
+      <div class="float-card bg-frontCard top-32 left-4  z-20 p-5">
         <img src="./images/card-logo.svg" class="h-8" alt="">
         <p class="mt-9 text-justify tracking-[.14em] w-full">
           0000 0000 0000 0000
@@ -27,7 +27,7 @@
           <span class="text-right">00/00</span>
         </div>
       </div>
-      <div class="absolute bg-backCard bg-contain bg-no-repeat bg-center h-40 w-[18rem] top-10 right-4 z-10">
+      <div class="float-card bg-backCard top-10 right-4 z-10">
         <p class="text-right text-[0.55em] mr-9 mt-16 tracking-wide">
           000
         </p>
@@ -37,34 +37,25 @@
       <form action="#" method="post" class="mt-24">
         <fieldset class="flex flex-col gap-y-4">
           <p>
-            <label for="name" class="uppercase text-sm tracking-wider">Cardholder Name</label>
-            <input type="text" id="name"
-              class="text-base mt-1 px-4 tracking-wide border rounded-lg w-full h-10 border-slate-200 placeholder-slate-300 "
-              placeholder="e.g. Jane Appleseed">
+            <label for="name" class="label">Cardholder Name</label>
+            <input type="text" id="name" class="input-text" placeholder="e.g. Jane Appleseed">
           </p>
           <p>
-            <label for="card_number" class="block uppercase text-sm tracking-wider">Card Number</label>
-            <input type="text" id="card-number"
-              class="text-base mt-1 px-4 tracking-wide border rounded-lg w-full h-10 border-slate-200 placeholder-slate-300 "
-              placeholder="e.g. 1234 5678 9123 0000">
+            <label for="card_number" class="label">Card Number</label>
+            <input type="text" id="card-number" class="input-text" placeholder="e.g. 1234 5678 9123 0000">
           </p>
           <div class="flex flex-row justify-between gap-x-2">
             <div class="w-1/2">
-              <label for="date" class="block uppercase text-sm tracking-wider">Exp. Date (MM/YY)</label>
+              <label for="date" class="label">Exp. Date (MM/YY)</label>
               <p id="date" class="flex flex-row gap-x-2">
-                <input type="number" id="month"
-                  class="text-base mt-1 px-4 tracking-wide border rounded-lg w-full h-10 border-slate-200 placeholder-slate-300"
-                  placeholder="MM">
-                <input type="number" id="month"
-                  class="text-base mt-1 px-4 tracking-wide border rounded-lg w-full h-10 border-slate-200 placeholder-slate-300"
-                  placeholder="YY">
+                <input type="number" id="month" class="input-text" placeholder="MM">
+                <input type="number" id="year" class="input-text" placeholder="YY">
               </p>
             </div>
             <div class="w-1/2">
-              <label for="cvc" class="block uppercase text-sm tracking-wider">CVC</label>
+              <label for="cvc" class="label">CVC</label>
               <p id="cvc">
-                <input type="number" id="month" placeholder="e.g. 123"
-                  class="text-base mt-1 px-4 tracking-wide border rounded-lg w-full h-10 border-slate-200 placeholder-slate-300">
+                <input type="number" id="cvc" class="input-text" placeholder="e.g. 123" 
               </p>
             </div>
           </div>

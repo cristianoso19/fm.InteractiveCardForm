@@ -1,3 +1,13 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+
+.float-card{
+    @apply absolute bg-contain bg-no-repeat bg-center h-40 w-[18rem] 
+}
+.label { 
+    @apply block uppercase text-sm tracking-wider
+}
+.input-text {
+    @apply text-base mt-1 px-4 tracking-wide border rounded-lg w-full h-10 border-slate-200 placeholder-slate-300 
+}
