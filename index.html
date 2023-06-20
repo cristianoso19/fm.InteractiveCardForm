@@ -38,21 +38,31 @@
       </div>
     </section>
     <section class="h-2/3">
-      <form action="#" method="post" class="block">
-        Cardholder Name
-        e.g. Jane Appleseed
-    
-        Card Number
-        e.g. 1234 5678 9123 0000
-    
-        Exp. Date (MM/YY)
-        MM
-        YY
-    
-        CVC
-        e.g. 123
-    
-        Confirm
+      <form action="#" method="post" class="mt-16">
+        <fieldset>
+          <p>
+            <label for="name">Cardholder Name</label>
+            <input type="text" id="name" placeholder="e.g. Jane Appleseed">
+          </p>
+           <p>
+            <label for="card_number" class="block">Card Number</label>
+            <input type="text" id="card-number" placeholder="e.g. 1234 5678 9123 0000">
+          </p>
+          <p class="flex flex-row">
+            <label for="date">Exp. Date (MM/YY)</label>
+            <p id="date">
+              <input type="number" id="month" placeholder="MM">
+              <input type="number" id="month" placeholder="YY">
+            </p>
+            <label for="cvc">CVC</label>
+            <p id="cvc">
+              <input type="number" id="month" placeholder="e.g. 123">
+            </p>
+            <p>
+              <button type="submit">Confirm</button>
+            </p>
+          </p>
+        </fieldset>
       </form>
     </section>
     <section class="hidden">
