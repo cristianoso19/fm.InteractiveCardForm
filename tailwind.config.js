@@ -6,6 +6,11 @@ module.exports = {
       fontFamily: {
         sans: ["Space Grotesk", "sans-serif"],
       },
+      backgroundImage: {
+        'hero': "url('/images/bg-main-mobile.png')",
+        'backCard': "url('/images/bg-card-back.png')",
+        'frontCard': "url('/images/bg-card-front.png')",
+      }
     },
     colors: {
       'white': 'hsl(0, 0%, 100%)',
