@@ -2,8 +2,11 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-.float-card{
-    @apply absolute bg-contain bg-no-repeat bg-center h-40 w-[18rem] 
+.float-card-container{
+    @apply absolute
+}
+.card{
+    @apply h-40 w-[18rem] 
 }
 .label { 
     @apply block uppercase text-xs tracking-[.18em] font-bold
