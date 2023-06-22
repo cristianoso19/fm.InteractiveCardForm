@@ -21,7 +21,18 @@ module.exports = {
         activeG2: "hsl(278, 94%, 30%)",
       },
     },
+    screens: {
+      sm: "575px",
+      // => @media (min-width: 575px) { ... }
+
+      md: "759px",
+      // => @media (min-width: 959px) { ... }
+
+      lg: "1439px",
+      // => @media (min-width: 1439px) { ... }
+    },
   },
+
   plugins: [],
 };
 
