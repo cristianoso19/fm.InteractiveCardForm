@@ -2,8 +2,8 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-.float-card-container{
-    @apply absolute
+.float-card{
+    @apply absolute w-[20rem] p-4 
 }
 .card{
     @apply h-40 w-[18rem] 
