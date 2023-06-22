@@ -7,7 +7,8 @@ module.exports = {
         sans: ["Space Grotesk", "sans-serif"],
       },
       backgroundImage: {
-        hero: "url('/images/bg-main-mobile.png')",
+        heroMobile: "url('/images/bg-main-mobile.png')",
+        heroDesktop: "url('/images/bg-main-desktop.png')",
         backCard: "url('/images/bg-card-back.png')",
         frontCard: "url('/images/bg-card-front.png')",
       },

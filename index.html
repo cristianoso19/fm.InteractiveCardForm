@@ -14,32 +14,32 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./dist/output.css">
 </head>
-<body class="text-lg md:max-w-md mx-auto lg:max-w-screen-lg">
-  <main class="h-screen flex flex-col">
-    <section class="h-1/3 relative bg-hero bg-cover bg-center bg-no-repeat z-20 text-white">
-      <div class="float-card top-28 z-20 ">
+<body class="text-lg mx-auto md:max-w-md lg:max-w-screen-lg">
+  <main class="h-screen flex flex-col lg:flex-row">
+    <section class="h-1/3 relative bg-heroMobile bg-cover bg-center bg-no-repeat text-white lg:h-full lg:w-1/3 lg:bg-heroDesktop">
+      <div class="float-card top-28 z-20 lg:float-card-lg lg:top-28 lg:-right-32 lg:drop-shadow-2xl">
         <picture>
-          <img src="./images/bg-card-front.png" alt="Front credit card" class="card">
+          <img src="./images/bg-card-front.png" alt="Front credit card" class="card lg:card-lg">
         </picture>
-        <img src="./images/card-logo.svg" class="absolute top-8 left-8 z-30 h-7" alt="Credit card logo">
-        <p class="absolute top-24 z-30 left-8 text-justify tracking-[.14em]">
+        <img src="./images/card-logo.svg" class="absolute top-8 left-8 z-30 h-7 lg:top-10 lg:left-10 lg:h-12" alt="Credit card logo">
+        <p class="absolute top-24 z-30 left-8 text-justify tracking-[.14em] lg:top-40 lg:text-3xl">
           0000 0000 0000 0000
         </p>
-        <div class="absolute w-[16rem] left-8 z-30 top-32 flex justify-between text-[0.52em] tracking-widest uppercase mt-2 font-light">
+        <div class="absolute w-[16rem] left-8 z-30 top-32 flex justify-between text-[0.52em] tracking-widest uppercase mt-2 font-light lg:top-56 lg:w-[25rem] lg:text-sm">
           <span class="text-left">Jane Appleseed</span>
           <span class="text-right">00/00</span>
         </div>
       </div>
-      <div class="float-card top-6 z-10 right-0">
+      <div class="float-card z-10 right-0 lg:float-card-lg top:32 lg:top-[420px] lg:-right-52 lg:drop-shadow-2xl">
         <picture>
-          <img src="./images/bg-card-back.png" alt="Back credit card" class="card">
+          <img src="./images/bg-card-back.png" alt="Back credit card" class="card lg:card-lg">
         </picture>
-        <p class="absolute z-10 top-20 right-14 text-right text-[0.55em] tracking-wide">
+        <p class="absolute z-10 top-20 right-14 text-right text-[0.55em] tracking-wide lg:top-[130px] lg:text-sm lg:right-20">
           000
         </p>
       </div>
     </section>
-    <section class="h-2/3 mx-4">
+    <section class="h-2/3 mx-4 lg:max-w-sm lg:mx-auto lg:my-auto">
       <form action="#" method="post" class="mt-24">
         <fieldset class="flex flex-col gap-y-6">
           <p>
