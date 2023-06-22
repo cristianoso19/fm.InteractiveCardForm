@@ -4,7 +4,6 @@
 
 
 @layer utilities {
-    @variants responsive {
         .float-card {
             @apply absolute w-[20rem] p-4
         }
@@ -20,7 +19,6 @@
         .card-lg {
             @apply h-64 w-[30rem]
         }
-   }
 
 }
 
