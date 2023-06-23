@@ -44,24 +44,30 @@
         <fieldset class="flex flex-col gap-y-6">
           <p>
             <label for="name" class="label">Cardholder Name</label>
-            <input type="text" id="name" class="input-text" placeholder="e.g. Jane Appleseed">
+            <input type="text" id="name" class="input-text focus:outline-none focus:border focus:bordered-gradient" placeholder="e.g. Jane Appleseed" required>
           </p>
-          <p>
+          <p> 
             <label for="card_number" class="label">Card Number</label>
-            <input type="text" id="card-number" class="input-text" placeholder="e.g. 1234 5678 9123 0000">
+            <input type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19" id="card-number" class="input-text peer invalid:[&:not(:placeholder-shown):not(:focus)]:border-red focus:outline-none focus:border focus:bordered-gradient" placeholder="e.g. 1234 5678 9123 0000" required>
+            <span class="mt-2 hidden text-sm text-red peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+              Wrong format, numbers only
+            </span>
           </p>
           <div class="flex flex-row justify-between gap-x-4">
             <div class="w-1/2">
               <label for="date" class="label">Exp. Date (MM/YY)</label>
               <p id="date" class="flex flex-row gap-x-2">
-                <input type="number" id="month" class="input-text" placeholder="MM">
-                <input type="number" id="year" class="input-text" placeholder="YY">
+                <input type="tel" inputmode="numeric" pattern="[0-9\s]{1,2}" maxlength="2" id="month" class="input-text invalid:[&:not(:placeholder-shown):not(:focus)]:border-red focus:outline-none focus:border focus:bordered-gradient" required placeholder="MM">
+                <span class="mt-2 hidden text-sm text-red peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                  Can't be blank
+                </span>
+                <input type="number" id="year" class="input-text focus:outline-none focus:border focus:bordered-gradient" placeholder="YY">
               </p>
             </div>
             <div class="w-1/2">
               <label for="cvc" class="label">CVC</label>
               <p id="cvc">
-                <input type="number" id="cvc" class="input-text" placeholder="e.g. 123" 
+                <input type="number" id="cvc" class="input-text focus:outline-none focus:border focus:bordered-gradient" placeholder="e.g. 123" 
               </p>
             </div>
           </div>
