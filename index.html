@@ -26,8 +26,10 @@
           0000 0000 0000 0000
         </p>
         <div class="absolute w-[16rem] left-8 z-30 top-32 flex justify-between text-[0.52em] tracking-widest uppercase mt-2 font-light lg:top-56 lg:w-[25rem] lg:text-sm">
-          <span class="text-left">Jane Appleseed</span>
-          <span class="text-right">00/00</span>
+          <span id="card-name" class="text-left">Jane Appleseed</span>
+          <div class="text-right">
+            <span id="card-month">00</span>/<span id="card-year">00</span>
+          </div>
         </div>
       </div>
       <div class="float-card z-10 right-0 lg:float-card-lg top:32 lg:top-[420px] lg:-right-52 lg:drop-shadow-2xl">
@@ -40,39 +42,37 @@
       </div>
     </section>
     <section class="h-2/3 mx-4 lg:max-w-sm lg:mx-auto lg:my-auto">
-      <form action="#" method="post" class="mt-24">
+      <form action="/" method="post" class="mt-24" novalidate>
         <fieldset class="flex flex-col gap-y-6">
           <p>
-            <label for="name" class="label">Cardholder Name</label>
-            <input type="text" id="name" class="input-text focus:outline-none focus:border focus:bordered-gradient" placeholder="e.g. Jane Appleseed" required>
+            <label for="cardholder-name" class="label">Cardholder Name</label>
+            <input type="text" id="cardholder-name" pattern="^((?:[A-Za-z]+ ?){1,3})$" autocomplete="cardholder-name" maxlength="36" size="36" class="input-text peer invalid:[&:not(:placeholder-shown):not(:focus)]:border-red " placeholder="e.g. Jane Appleseed" required>
+            <span class="mt-2 hidden text-sm text-red peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+              Please fill the card holdername at least 3 characters
+            </span> 
           </p>
           <p> 
-            <label for="card_number" class="label">Card Number</label>
-            <input type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19" id="card-number" class="input-text peer invalid:[&:not(:placeholder-shown):not(:focus)]:border-red focus:outline-none focus:border focus:bordered-gradient" placeholder="e.g. 1234 5678 9123 0000" required>
-            <span class="mt-2 hidden text-sm text-red peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-              Wrong format, numbers only
+            <label for="card-number" class="label">Card Number</label>
+            <input type="tel" inputmode="numeric" pattern="^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$" autocomplete="cc-number" maxlength="19" id="card-number" class="input-text peer invalid:[&:not(:placeholder-shown):not(:focus)]:border-red " placeholder="e.g. 1234 5678 9123 0000" required>
+            <span class="error mt-2 hidden text-xs text-red peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+              Wrong format, numbers only, max length 19 characters.
             </span>
           </p>
           <div class="flex flex-row justify-between gap-x-4">
-            <div class="w-1/2">
-              <label for="date" class="label">Exp. Date (MM/YY)</label>
-              <p id="date" class="flex flex-row gap-x-2">
-                <input type="tel" inputmode="numeric" pattern="[0-9\s]{1,2}" maxlength="2" id="month" class="input-text invalid:[&:not(:placeholder-shown):not(:focus)]:border-red focus:outline-none focus:border focus:bordered-gradient" required placeholder="MM">
-                <span class="mt-2 hidden text-sm text-red peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                  Can't be blank
-                </span>
-                <input type="number" id="year" class="input-text focus:outline-none focus:border focus:bordered-gradient" placeholder="YY">
-              </p>
+            <div class="w-1/2 grid grid-cols-2 grid-rows-[auto_auto_15px] gap-x-2">
+              <label for="month" class="label col-span-2">Exp. Date (MM/YY)</label>
+              <input type="text" id="month" class="input-date" inputmode="numeric" pattern="0[1-9]|1[0-2]" size="2" maxlength="2" placeholder="MM" required>
+              <input type="text" id="year" class="input-date" inputmode="numeric" pattern="2[3-9]|[3-9][0-9]" size="2" maxlength="2" placeholder="YY" required>
+              <span id="error-date" class="hidden" aria-live="polite">error</span>
             </div>
-            <div class="w-1/2">
-              <label for="cvc" class="label">CVC</label>
-              <p id="cvc">
-                <input type="number" id="cvc" class="input-text focus:outline-none focus:border focus:bordered-gradient" placeholder="e.g. 123" 
-              </p>
+            <div class="w-1/2 grid grid-cols-1 grid-rows-[auto_auto_15px]">
+              <label for="cvc" class="label col-span-2">CVC</label>
+                <input type="text" id="cvc" inputmode="numeric" class="input-text" pattern="[0-9]{3}" size="3" maxlength="3" placeholder="e.g. 123" required> 
+              <span id="error-cvc" class="hidden" aria-live="polite">error</span>
             </div>
           </div>
           <p>
-            <button type="submit" class="bg-vDviolet text-white w-full rounded-md h-[2.9em] mt-1">Confirm</button>
+            <button type="submit" class="bg-vDviolet text-white w-full rounded-md h-[2.9em]">Confirm</button>
           </p>
           </p>
         </fieldset>
@@ -92,5 +92,6 @@
       Coded by <a href="https://github.com/cristianoso19">@cristianoso19 🚀</a>.
     </div>
   </footer>
+  <script type="module" src="./src/main.js"></script>
 </body>
 </html>
