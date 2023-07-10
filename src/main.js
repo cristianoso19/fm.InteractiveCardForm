@@ -9,15 +9,18 @@ const card_name = document.getElementById('card-name')
 const cardholder_name = document.getElementById('cardholder-name')
 const card_month = document.getElementById('card-month');
 const card_year = document.getElementById('card-year');
+const card_cvc = document.getElementById('card-cvc');
 
 cardholder_name.addEventListener('input',()=>{
   cardholder_name.value = cardholder_name.value.toUpperCase();
   card_name.textContent = cardholder_name.value;
 });
 
+
 cvc.addEventListener('input',(event)=>{
   if (cvc.validity.valid){
     quitErrors(cvc, error_cvc);
+    card_cvc.textContent = cvc.value;
   } else {
     showError(cvc,error_cvc);
   }
