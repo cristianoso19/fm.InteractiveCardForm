@@ -1,4 +1,3 @@
-
 const form = document.querySelector("form");
 const month = document.getElementById('month');
 const year = document.getElementById('year');
@@ -74,11 +73,33 @@ function renderErrors(input,error,message ){
   input.className = "error-input";
 }
 
-function quitErrors(input, error){
-    // Reset the content of the message
-    error.textContent = '';
+function quitErrors(input, error) {
+  // Reset the content of the message
+  error.textContent = "";
   // Reset the visual state of the message
-    error.className = 'hidden';
-    input.className = 'input-date';
+  error.className = "hidden";
+  input.className = "input-date";
 }
 
+function cc_format(value) {
+  var v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '')
+  var matches = v.match(/\d{4,16}/g);
+  var match = matches && matches[0] || ''
+  var parts = []
+
+  for (let i=0, len=match.length; i<len; i+=4) {
+      parts.push(match.substring(i, i+4))
+  }
+
+  if (parts.length) {
+      return parts.join(' ')
+  } else {
+      return value
+  }
+}
+
+onload = function() {
+  document.getElementById('card-number').oninput = function() {
+    this.value = cc_format(this.value)
+  }
+}
