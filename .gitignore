@@ -17,4 +17,4 @@
 
 node_modules
 bun.*
-dist\output.css
+dist/output.css
