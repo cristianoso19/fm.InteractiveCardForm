@@ -779,6 +779,27 @@ video {
         outline: 2px solid transparent;
         outline-offset: 2px;
     }
+.input-success{
+        border: double 4px transparent;
+        border-radius: 6px;
+        background-image: linear-gradient(white, white), 
+                          linear-gradient(to right,hsl(249, 99%, 64%),hsl(278, 94%, 30%));
+        background-origin: border-box;
+        background-clip: padding-box, border-box;
+        margin-top: 0.5rem;
+        height: 2.75rem;
+        width: 100%;
+        border-radius: 0.5rem;
+        border-width: 1px;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        font-size: 1.125rem;
+        line-height: 1.75rem;
+        letter-spacing: 0.025em;
+        outline: 2px solid transparent;
+        outline-offset: 2px;
+    }
+
 .error {
   grid-column: span 2 / span 2;
   margin-top: 0.5rem;

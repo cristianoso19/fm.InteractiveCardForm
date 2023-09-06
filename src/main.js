@@ -4,17 +4,99 @@ const year = document.getElementById('year');
 const cvc = document.getElementById('cvc');
 const error_date = document.getElementById('error-date');
 const error_cvc = document.getElementById('error-cvc');
-const card_name = document.getElementById('card-name')
-const cardholder_name = document.getElementById('cardholder-name')
+const card_name = document.getElementById('card-name');
+const card_number = document.getElementById('card-number');
+const cardholder_name = document.getElementById('cardholder-name');
+const cardholder_number = document.getElementById('cardholder-number');
 const card_month = document.getElementById('card-month');
 const card_year = document.getElementById('card-year');
 const card_cvc = document.getElementById('card-cvc');
+const cardholder_name_error = document.getElementById('cardholder-name-error');
+const cardholder_number_error = document.getElementById('cardholder-number-error');
+
 
 cardholder_name.addEventListener('input',()=>{
   cardholder_name.value = cardholder_name.value.toUpperCase();
   card_name.textContent = cardholder_name.value;
+
+  if (cardholder_name.value.length >= 4){
+    let regexPattern = /^(?:[A-Za-z]+ ?){1,3}$/;
+    if(regexPattern.test(cardholder_name.value))
+    {
+      cardholder_name.classList = null;
+      cardholder_name.classList.add('input-success');
+      cardholder_name_error.classList = null;
+      cardholder_name_error.classList.add('hidden');
+ 
+    } else {
+      cardholder_name.classList = null;
+      cardholder_name.classList.add('error-input');
+      cardholder_name_error.classList = null;
+      cardholder_name_error.classList.add('error');
+      cardholder_name_error.innerText = "Wrong format, letters only";
+    }
+  }
 });
 
+function cc_format(value) {
+  let v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '')
+  let matches = v.match(/\d{4,16}/g);
+  let match = matches && matches[0] || ''
+  let parts = []
+
+  for (let i=0, len=match.length; i<len; i+=4) {
+      parts.push(match.substring(i, i+4))
+  }
+
+  if (parts.length) {
+      return parts.join(' ')
+  } else {
+      return value
+  }
+}
+
+cardholder_number.addEventListener('change', ValidateCreditCardNumber);
+
+cardholder_number.addEventListener('input',(event)=>{
+  cardholder_number.value = cc_format(cardholder_number.value);
+  card_number.textContent = cardholder_number.value;
+});
+
+function ValidateCreditCardNumber() {
+  let value = cardholder_number.value;
+  let ccNum = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+
+  const visaRegEx = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/;
+  const mastercardRegEx = /^(?:5[1-5][0-9]{14})$/;
+  const amexpRegEx = /^(?:3[47][0-9]{13})$/;
+  const discovRegEx = /^(?:6(?:011|5[0-9][0-9])[0-9]{12})$/;
+  let isValid = false;
+
+  if (visaRegEx.test(ccNum)) {
+    isValid = true;
+  } else if(mastercardRegEx.test(ccNum)) {
+    isValid = true;
+  } else if(amexpRegEx.test(ccNum)) {
+    isValid = true;
+  } else if(discovRegEx.test(ccNum)) {
+    isValid = true;
+  }
+
+  if (isValid) {
+    console.log("Thank You!");
+    cardholder_number.classList = null;
+    cardholder_number.classList.add("input-success");
+    cardholder_number_error.classList = null;
+    cardholder_number_error.classList.add("hidden");
+  } else {
+    console.log("Wrong format, numbers only.");
+    cardholder_number.classList = null;
+    cardholder_number.classList.add("error-input");
+    cardholder_number_error.classList = null;
+    cardholder_number_error.classList.add("error");
+    cardholder_number_error.innerText = "Wrong number, enter a valid credit card";
+  }
+}
 
 cvc.addEventListener('input',(event)=>{
   if (cvc.validity.valid){
@@ -81,25 +163,3 @@ function quitErrors(input, error) {
   input.className = "input-date";
 }
 
-function cc_format(value) {
-  var v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '')
-  var matches = v.match(/\d{4,16}/g);
-  var match = matches && matches[0] || ''
-  var parts = []
-
-  for (let i=0, len=match.length; i<len; i+=4) {
-      parts.push(match.substring(i, i+4))
-  }
-
-  if (parts.length) {
-      return parts.join(' ')
-  } else {
-      return value
-  }
-}
-
-onload = function() {
-  document.getElementById('card-number').oninput = function() {
-    this.value = cc_format(this.value)
-  }
-}
