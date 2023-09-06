@@ -19,6 +19,7 @@ cardholder_month.addEventListener('focusout', ()=>{
   if (cardholder_month.value != "") {
     if (validateMonth(cardholder_month.value)) {
       console.log("bien");
+
     } else {
       cardholder_month.classList = null;
       cardholder_month.classList.add("error-input");
