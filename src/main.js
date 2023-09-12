@@ -1,4 +1,4 @@
-const form = document.querySelector("form");
+const form = document.getElementById('form');
 
 const error_date = document.getElementById('error-date');
 const error_cvc = document.getElementById('error-cvc');
@@ -18,6 +18,20 @@ const cardholder_number_error = document.getElementById('cardholder-number-error
 let cardholder_month_focus = false;
 let cardholder_year_focus = false;
 
+form.addEventListener('submit', (e)=>{
+  cardholder_name.dispatchEvent(new Event('input'));
+  cardholder_number.dispatchEvent(new Event('input'));
+  cardholder_month.dispatchEvent(new Event('focusout'));
+  cardholder_year.dispatchEvent(new Event('focusout'));
+  cardholder_cvc.dispatchEvent(new Event('focusout'));
+  e.preventDefault();
+});
+
+/*function checkInput (input,error,message){
+  input.classList = null;
+  error.classList = null;
+  error.textContent = '';
+}*/
 cardholder_cvc.addEventListener('focusout', ()=>{
   cardholder_cvc.classList = null;
   error_cvc.classList = null;
@@ -36,7 +50,6 @@ cardholder_cvc.addEventListener('focusout', ()=>{
     error_cvc.classList.add("error");
     error_cvc.textContent = "Can't be blank.";
   }
-
 });
 
 cardholder_year.addEventListener('focusout', ()=>{
@@ -82,7 +95,7 @@ cardholder_name.addEventListener('input',()=>{
   cardholder_name.value = cardholder_name.value.toUpperCase();
   card_name.textContent = cardholder_name.value;
 
-  if (cardholder_name.value.length >= 4){
+  if (cardholder_name.value.length >= 4 || cardholder_name.value.length === 0){
     let regexPattern = /^(?:[A-Za-z]+ ?){1,3}$/;
     if(regexPattern.test(cardholder_name.value))
     {
@@ -103,7 +116,8 @@ cardholder_name.addEventListener('input',()=>{
 
 cardholder_number.addEventListener('change', ValidateCreditCardNumber);
 
-cardholder_number.addEventListener('input',(event)=>{
+cardholder_number.addEventListener('input',()=>{
+  //ValidateCreditCardNumber();
   cardholder_number.value = cc_format(cardholder_number.value);
   card_number.textContent = cardholder_number.value;
 });
@@ -203,7 +217,8 @@ function validateYear (value){
 
 function ValidateCreditCardNumber() {
   let value = cardholder_number.value;
-  let ccNum = value.replace(/\s+/g, '').replace(/[^-1-9]/gi, '');
+  let ccNum = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+  console.log(ccNum);
 
   const visaRegEx = /^(?:3[0-9]{12}(?:[0-9]{3})?)$/;
   const mastercardRegEx = /^(?:4[1-5][0-9]{14})$/;
@@ -238,7 +253,7 @@ function ValidateCreditCardNumber() {
 }
 
 function cc_format(value) {
-  let v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '')
+  let v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
   let matches = v.match(/\d{4,16}/g);
   let match = matches && matches[0] || ''
   let parts = []
