@@ -18,6 +18,27 @@ const cardholder_number_error = document.getElementById('cardholder-number-error
 let cardholder_month_focus = false;
 let cardholder_year_focus = false;
 
+cardholder_cvc.addEventListener('focusout', ()=>{
+  cardholder_cvc.classList = null;
+  error_cvc.classList = null;
+  error_cvc.textContent = "";
+  if (cardholder_cvc.value != "") {
+    if (validateCvc(cardholder_cvc.value)) {
+      cardholder_cvc.classList.add('input-success');
+      card_cvc.textContent = cardholder_cvc.value;
+    } else {
+      cardholder_cvc.classList.add("error-input");
+      error_cvc.classList.add("error");
+      error_cvc.textContent = "Enter a valid CVC.";
+    }
+  } else {
+    cardholder_cvc.classList.add("error-input");
+    error_cvc.classList.add("error");
+    error_cvc.textContent = "Can't be blank.";
+  }
+
+});
+
 cardholder_year.addEventListener('focusout', ()=>{
   cardholder_year.classList = null;
   if (cardholder_year.value != "") {
@@ -172,12 +193,12 @@ function validateDate(){
 
 function validateMonth (value){
   let regexPattern =/0[1-9]|1[0-2]/;
-  return regexPattern.test(value) ? true : false;  
+  return regexPattern.test(value); 
 }
 
 function validateYear (value){
   let regexPattern =/[0-9]{2}/;
-  return regexPattern.test(value) ? true : false;  
+  return regexPattern.test(value); 
 }
 
 function ValidateCreditCardNumber() {
@@ -231,4 +252,9 @@ function cc_format(value) {
   } else {
       return value
   }
+}
+
+function validateCvc(value) {
+  const regex = /^(0{1,2}[0-9]{1}|[1-9][0-9]{2})$/;
+  return regex.test(value);
 }
