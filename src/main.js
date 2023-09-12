@@ -15,36 +15,47 @@ const cardholder_cvc = document.getElementById('cardholder-cvc');
 const cardholder_name_error = document.getElementById('cardholder-name-error');
 const cardholder_number_error = document.getElementById('cardholder-number-error');
 
-cardholder_month.addEventListener('focusout', ()=>{
-  if (cardholder_month.value != "") {
-    if (validateMonth(cardholder_month.value)) {
-      console.log("bien");
+let cardholder_month_focus = false;
+let cardholder_year_focus = false;
 
+cardholder_year.addEventListener('focusout', ()=>{
+  cardholder_year.classList = null;
+  if (cardholder_year.value != "") {
+    if (validateYear(cardholder_year.value)) {
+      cardholder_year.classList.add('input-success');
+      console.log("bien");
+      validateDate();
     } else {
-      cardholder_month.classList = null;
-      cardholder_month.classList.add("error-input");
-      error_date.classList = null;
-      error_date.classList.add("error");
-      error_date.textContent = "Can't be blank.";
+      cardholder_year.classList.add("error-input");
       console.log("mal");
+      validateDate();
     }
   } else {
-    cardholder_month.classList = null;
-    cardholder_month.classList.add("error-input");
-    error_date.classList = null;
+    cardholder_year.classList.add("error-input");
     error_date.classList.add("error");
     error_date.textContent = "Can't be blank.";
   }
-})
+});
 
-function validateMonth (value){
-  let regexPattern =/0[1-9]|1[0-2]/;
-  return regexPattern.test(value) ? true : false;  
-}
-function validateYear (value){
-  let regexPattern =/[0-9]{2}/;
-  return regexPattern.test(value) ? true : false;  
-}
+cardholder_month.addEventListener('focusout', ()=>{
+  cardholder_month.classList = null;
+  if (cardholder_month.value != "") {
+    if (validateMonth(cardholder_month.value)) {
+      validateDate();
+      cardholder_month.classList.add('input-success');
+      console.log("bien");
+    } else {
+      validateDate();
+      cardholder_month.classList.add("error-input");
+      console.log("mal");
+    }
+  } else {
+    cardholder_month.classList.add("error-input");
+    error_date.classList.add("error");
+    error_date.textContent = "Can't be blank.";
+    validateDate();    
+  }
+})
 
 cardholder_name.addEventListener('input',()=>{
   cardholder_name.value = cardholder_name.value.toUpperCase();
@@ -69,65 +80,12 @@ cardholder_name.addEventListener('input',()=>{
   }
 });
 
-function cc_format(value) {
-  let v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '')
-  let matches = v.match(/\d{4,16}/g);
-  let match = matches && matches[0] || ''
-  let parts = []
-
-  for (let i=0, len=match.length; i<len; i+=4) {
-      parts.push(match.substring(i, i+4))
-  }
-
-  if (parts.length) {
-      return parts.join(' ')
-  } else {
-      return value
-  }
-}
-
 cardholder_number.addEventListener('change', ValidateCreditCardNumber);
 
 cardholder_number.addEventListener('input',(event)=>{
   cardholder_number.value = cc_format(cardholder_number.value);
   card_number.textContent = cardholder_number.value;
 });
-
-function ValidateCreditCardNumber() {
-  let value = cardholder_number.value;
-  let ccNum = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-
-  const visaRegEx = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/;
-  const mastercardRegEx = /^(?:5[1-5][0-9]{14})$/;
-  const amexpRegEx = /^(?:3[47][0-9]{13})$/;
-  const discovRegEx = /^(?:6(?:011|5[0-9][0-9])[0-9]{12})$/;
-  let isValid = false;
-
-  if (visaRegEx.test(ccNum)) {
-    isValid = true;
-  } else if(mastercardRegEx.test(ccNum)) {
-    isValid = true;
-  } else if(amexpRegEx.test(ccNum)) {
-    isValid = true;
-  } else if(discovRegEx.test(ccNum)) {
-    isValid = true;
-  }
-
-  if (isValid) {
-    console.log("Thank You!");
-    cardholder_number.classList = null;
-    cardholder_number.classList.add("input-success");
-    cardholder_number_error.classList = null;
-    cardholder_number_error.classList.add("hidden");
-  } else {
-    console.log("Wrong format, numbers only.");
-    cardholder_number.classList = null;
-    cardholder_number.classList.add("error-input");
-    cardholder_number_error.classList = null;
-    cardholder_number_error.classList.add("error");
-    cardholder_number_error.innerText = "Wrong number, enter a valid credit card";
-  }
-}
 
 // cvc.addEventListener('input',(event)=>{
 //   if (cvc.validity.valid){
@@ -194,3 +152,83 @@ function ValidateCreditCardNumber() {
 //   input.className = "input-date";
 // }
 
+function validateDate(){
+  error_date.classList = null;
+  if (validateMonth(cardholder_month.value) === true && validateYear(cardholder_year.value) === true){
+    error_date.classList.add('hidden');
+    card_month.textContent = cardholder_month.value;
+    card_year.textContent = cardholder_year.value;
+  } else if (!validateMonth(cardholder_month.value)){
+    error_date.classList.add("error");
+    error_date.textContent = "Enter a valid month.";
+  } else if (!validateYear(cardholder_year.value)){
+    error_date.classList.add("error");
+    error_date.textContent = "Enter a valid year.";
+  } else if (!validateMonth(cardholder_month.value) && !validateYear(cardholder_year.value)){
+    error_date.classList.add("error");
+    error_date.textContent = "Enter a valid date.";
+  }
+}
+
+function validateMonth (value){
+  let regexPattern =/0[1-9]|1[0-2]/;
+  return regexPattern.test(value) ? true : false;  
+}
+
+function validateYear (value){
+  let regexPattern =/[0-9]{2}/;
+  return regexPattern.test(value) ? true : false;  
+}
+
+function ValidateCreditCardNumber() {
+  let value = cardholder_number.value;
+  let ccNum = value.replace(/\s+/g, '').replace(/[^-1-9]/gi, '');
+
+  const visaRegEx = /^(?:3[0-9]{12}(?:[0-9]{3})?)$/;
+  const mastercardRegEx = /^(?:4[1-5][0-9]{14})$/;
+  const amexpRegEx = /^(?:2[47][0-9]{13})$/;
+  const discovRegEx = /^(?:5(?:011|5[0-9][0-9])[0-9]{12})$/;
+  let isValid = false;
+
+  if (visaRegEx.test(ccNum)) {
+    isValid = true;
+  } else if(mastercardRegEx.test(ccNum)) {
+    isValid = true;
+  } else if(amexpRegEx.test(ccNum)) {
+    isValid = true;
+  } else if(discovRegEx.test(ccNum)) {
+    isValid = true;
+  }
+
+  if (isValid) {
+    console.log("Thank You!");
+    cardholder_number.classList = null;
+    cardholder_number.classList.add("input-success");
+    cardholder_number_error.classList = null;
+    cardholder_number_error.classList.add("hidden");
+  } else {
+    console.log("Wrong format, numbers only.");
+    cardholder_number.classList = null;
+    cardholder_number.classList.add("error-input");
+    cardholder_number_error.classList = null;
+    cardholder_number_error.classList.add("error");
+    cardholder_number_error.innerText = "Wrong number, enter a valid credit card";
+  }
+}
+
+function cc_format(value) {
+  let v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '')
+  let matches = v.match(/\d{4,16}/g);
+  let match = matches && matches[0] || ''
+  let parts = []
+
+  for (let i=0, len=match.length; i<len; i+=4) {
+      parts.push(match.substring(i, i+4))
+  }
+
+  if (parts.length) {
+      return parts.join(' ')
+  } else {
+      return value
+  }
+}
