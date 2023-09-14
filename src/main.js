@@ -20,7 +20,7 @@ let cardholder_year_focus = false;
 
 form.addEventListener('submit', (e)=>{
   cardholder_name.dispatchEvent(new Event('input'));
-  cardholder_number.dispatchEvent(new Event('input'));
+  cardholder_number.dispatchEvent(new Event('change'));
   cardholder_month.dispatchEvent(new Event('focusout'));
   cardholder_year.dispatchEvent(new Event('focusout'));
   cardholder_cvc.dispatchEvent(new Event('focusout'));
@@ -114,11 +114,12 @@ cardholder_name.addEventListener('input',()=>{
   }
 });
 
-cardholder_number.addEventListener('change', ValidateCreditCardNumber);
-
-cardholder_number.addEventListener('input',()=>{
-  //ValidateCreditCardNumber();
+cardholder_number.addEventListener('input', ()=>{
   cardholder_number.value = cc_format(cardholder_number.value);
+});
+
+cardholder_number.addEventListener('change',()=>{
+  ValidateCreditCardNumber();
   card_number.textContent = cardholder_number.value;
 });
 
@@ -220,10 +221,11 @@ function ValidateCreditCardNumber() {
   let ccNum = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
   console.log(ccNum);
 
-  const visaRegEx = /^(?:3[0-9]{12}(?:[0-9]{3})?)$/;
-  const mastercardRegEx = /^(?:4[1-5][0-9]{14})$/;
-  const amexpRegEx = /^(?:2[47][0-9]{13})$/;
-  const discovRegEx = /^(?:5(?:011|5[0-9][0-9])[0-9]{12})$/;
+  const visaRegEx = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/;
+  const mastercardRegEx = /^(?:5[1-5][0-9]{14})$/;
+  const amexpRegEx = /^(?:3[47][0-9]{13})$/;
+  const discovRegEx = /^(?:3(?:011|5[0-9][0-9])[0-9]{12})$/;
+
   let isValid = false;
 
   if (visaRegEx.test(ccNum)) {
