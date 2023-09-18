@@ -556,6 +556,9 @@ video {
 .mt-24 {
   margin-top: 6rem;
 }
+.block {
+  display: block;
+}
 .flex {
   display: flex;
 }
@@ -771,7 +774,7 @@ video {
         outline: 2px solid transparent;
         outline-offset: 2px;
     }
-.input-success{
+.success-input{
         border: double 4px transparent;
         border-radius: 6px;
         background-image: linear-gradient(white, white), 

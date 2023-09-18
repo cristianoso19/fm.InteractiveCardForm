@@ -1,7 +1,4 @@
-const form = document.getElementById('form');
-
 const error_date = document.getElementById('error-date');
-const error_cvc = document.getElementById('error-cvc');
 const card_name = document.getElementById('card-name');
 const card_number = document.getElementById('card-number');
 const card_month = document.getElementById('card-month');
@@ -12,188 +9,137 @@ const cardholder_number = document.getElementById('cardholder-number');
 const cardholder_month = document.getElementById('cardholder-month');
 const cardholder_year = document.getElementById('cardholder-year');
 const cardholder_cvc = document.getElementById('cardholder-cvc');
-const cardholder_name_error = document.getElementById('cardholder-name-error');
-const cardholder_number_error = document.getElementById('cardholder-number-error');
+const success = document.getElementById('success');
 
-let cardholder_month_focus = false;
-let cardholder_year_focus = false;
-
-form.addEventListener('submit', (e)=>{
-  cardholder_name.dispatchEvent(new Event('input'));
-  cardholder_number.dispatchEvent(new Event('change'));
-  cardholder_month.dispatchEvent(new Event('focusout'));
-  cardholder_year.dispatchEvent(new Event('focusout'));
-  cardholder_cvc.dispatchEvent(new Event('focusout'));
-  e.preventDefault();
-});
-
-/*function checkInput (input,error,message){
-  input.classList = null;
-  error.classList = null;
-  error.textContent = '';
-}*/
-cardholder_cvc.addEventListener('focusout', ()=>{
-  cardholder_cvc.classList = null;
-  error_cvc.classList = null;
-  error_cvc.textContent = "";
-  if (cardholder_cvc.value != "") {
-    if (validateCvc(cardholder_cvc.value)) {
-      cardholder_cvc.classList.add('input-success');
-      card_cvc.textContent = cardholder_cvc.value;
-    } else {
-      cardholder_cvc.classList.add("error-input");
-      error_cvc.classList.add("error");
-      error_cvc.textContent = "Enter a valid CVC.";
-    }
-  } else {
-    cardholder_cvc.classList.add("error-input");
-    error_cvc.classList.add("error");
-    error_cvc.textContent = "Can't be blank.";
-  }
-});
-
-cardholder_year.addEventListener('focusout', ()=>{
-  cardholder_year.classList = null;
-  if (cardholder_year.value != "") {
-    if (validateYear(cardholder_year.value)) {
-      cardholder_year.classList.add('input-success');
-      console.log("bien");
-      validateDate();
-    } else {
-      cardholder_year.classList.add("error-input");
-      console.log("mal");
-      validateDate();
-    }
-  } else {
-    cardholder_year.classList.add("error-input");
-    error_date.classList.add("error");
-    error_date.textContent = "Can't be blank.";
-  }
-});
-
-cardholder_month.addEventListener('focusout', ()=>{
-  cardholder_month.classList = null;
-  if (cardholder_month.value != "") {
-    if (validateMonth(cardholder_month.value)) {
-      validateDate();
-      cardholder_month.classList.add('input-success');
-      console.log("bien");
-    } else {
-      validateDate();
-      cardholder_month.classList.add("error-input");
-      console.log("mal");
-    }
-  } else {
-    cardholder_month.classList.add("error-input");
-    error_date.classList.add("error");
-    error_date.textContent = "Can't be blank.";
-    validateDate();    
-  }
-})
-
-cardholder_name.addEventListener('input',()=>{
-  cardholder_name.value = cardholder_name.value.toUpperCase();
-  card_name.textContent = cardholder_name.value;
-
-  if (cardholder_name.value.length >= 4 || cardholder_name.value.length === 0){
-    let regexPattern = /^(?:[A-Za-z]+ ?){1,3}$/;
-    if(regexPattern.test(cardholder_name.value))
-    {
-      cardholder_name.classList = null;
-      cardholder_name.classList.add('input-success');
-      cardholder_name_error.classList = null;
-      cardholder_name_error.classList.add('hidden');
- 
-    } else {
-      cardholder_name.classList = null;
-      cardholder_name.classList.add('error-input');
-      cardholder_name_error.classList = null;
-      cardholder_name_error.classList.add('error');
-      cardholder_name_error.innerText = "Wrong format, letters only";
-    }
-  }
-});
-
+cardholder_cvc.addEventListener('focusout', reviewCvc);
+cardholder_year.addEventListener('focusout', reviewCardholderYear);
+cardholder_month.addEventListener('focusout', reviewCardholderMonth);
+cardholder_name.addEventListener('input', reviewCardholderName);
 cardholder_number.addEventListener('input', ()=>{
   cardholder_number.value = cc_format(cardholder_number.value);
 });
-
-cardholder_number.addEventListener('change',()=>{
-  ValidateCreditCardNumber();
+cardholder_number.addEventListener('focusout',()=>{
+  reviewCardholderNumber();
   card_number.textContent = cardholder_number.value;
 });
 
-// cvc.addEventListener('input',(event)=>{
-//   if (cvc.validity.valid){
-//     quitErrors(cvc, error_cvc);
-//     card_cvc.textContent = cvc.value;
-//   } else {
-//     showError(cvc,error_cvc);
-//   }
-// });
+form.addEventListener('submit', (e)=>{
+  e.preventDefault();
+  if (validateForm()) {
+    document.querySelector('form').classList.add('hidden');
+    success.classList.replace('hidden','block');
+  }
+});
 
-// year.addEventListener('input',(event)=>{
-//   if (year.validity.valid){
-//     quitErrors(year,error_date);
-//     card_year.textContent = year.value;
-//   } else {
-//     showError(year,error_date);
-//   }
-// });
+function validateForm(){
+  if (!(reviewCardholderName() ||
+    reviewCardholderNumber() ||
+    reviewCardholderMonth() ||
+    reviewCardholderYear() ||
+    reviewCvc()
+  )){
+    return false;
+  }else{
+    return true;
+  }
+}
 
-// month.addEventListener("input", (event) => {
-//   // Each time the user types something, we check if the
-//   // form fields are valid.
-//   if (month.validity.valid) {
-//     // In case there is an error message visible, if the field
-//     // is valid, we remove the error message.
-//     quitErrors(month,error_date)
-//     card_month.textContent = month.value;
-//   } else {
-//     // If there is still an error, show the correct error
-//     showError(month,error_date);
-//   }
-// });
+const setError = (element, message) => {
+  const inputControl = element.parentElement;
+  const errorDisplay = inputControl.querySelector('span');
 
-// form.addEventListener("submit", (event) => {
-//   // if the email field is valid, we let the form submit
-//   if (!month.validity.valid) {
-//     // If it isn't, we display an appropriate error message
-//     showError(month,error_date);
-//     // Then we prevent the form from being sent by canceling the event
-//     event.preventDefault();
-//   }
-// });
+  element.classList.remove('success-input');
+  element.classList.add('error-input');
+  errorDisplay.innerText = message;
+  errorDisplay.classList.replace('hidden', 'error');
+}
 
-// function showError(input,error) {
-//   if (input.validity.valueMissing){
-//     renderErrors(input,error,"Can't be blank.");
-//   } else {
-//     renderErrors(input,error,"Wrong format, numbers only.");
-//   }
-// }
+const setSuccess = (element) => {
+  const inputControl = element.parentElement;
+  const errorDisplay = inputControl.querySelector('span');
 
-// function renderErrors(input,error,message ){
-//   // Set the styling appropriately
-//   error.textContent = message; // Reset the content of the message
-//   error.className = "error";
-//   input.className = "error-input";
-// }
+  element.classList.remove('error-input');
+  element.classList.add('success-input');
+  errorDisplay.innerText = '';
+  inputControl.classList.replace('error', 'hidden');
+}
 
-// function quitErrors(input, error) {
-//   // Reset the content of the message
-//   error.textContent = "";
-//   // Reset the visual state of the message
-//   error.className = "hidden";
-//   input.className = "input-date";
-// }
+function reviewCvc(){
+  if (cardholder_cvc.value != "") {
+    if (validateCvc(cardholder_cvc.value)) {
+      setSuccess(cardholder_cvc);
+      card_cvc.textContent = cardholder_cvc.value;
+      return true;
+    } else {
+      setError(cardholder_cvc,'Enter a valid CVC.');
+    }
+  } else {
+    setError(cardholder_cvc,'Can\'t be blank.');
+  }
+  return false;
+}
+
+function reviewCardholderName(){
+  cardholder_name.value = cardholder_name.value.toUpperCase();
+  if (validateCardHolderName(cardholder_name)){
+    setSuccess(cardholder_name);
+    return true;
+  } else {
+    setError(cardholder_name,"Wrong name, letters only");
+  }
+  card_name.textContent = cardholder_name.value;
+  return false;
+}
+
+function reviewCardholderNumber(){
+  if (validateCreditCardNumber()) {
+    console.log("Thank You!");
+    setSuccess(cardholder_number); 
+    return true;
+  } else {
+    console.log("Wrong format, numbers only.");
+    setError(cardholder_number,"Wrong number, enter a valid credit card");
+    return false;
+  }
+}
+
+function reviewCardholderMonth(){
+  if (cardholder_month.value != "") {
+    if (validateMonth(cardholder_month.value)) {
+      setSuccess(cardholder_month);
+      validateDate();
+      return true;
+    } else {
+      setError(cardholder_month, 'Enter a vaild month')
+    }
+  } else {
+    setError(cardholder_month, 'Can\'t be blank.')
+  }
+  return false;
+}
+
+function reviewCardholderYear(){
+  if (cardholder_year.value != "") {
+    if (validateYear(cardholder_year.value)) {
+      setSuccess(cardholder_year);
+      validateDate();
+      return true;
+    } else {
+      setError(cardholder_year, 'Enter a vaild year')
+    }
+  } else {
+    setError(cardholder_year, 'Can\'t be blank.')
+  }
+  return false;
+}
+
 
 function validateDate(){
-  error_date.classList = null;
   if (validateMonth(cardholder_month.value) === true && validateYear(cardholder_year.value) === true){
     error_date.classList.add('hidden');
     card_month.textContent = cardholder_month.value;
     card_year.textContent = cardholder_year.value;
+    return true;
   } else if (!validateMonth(cardholder_month.value)){
     error_date.classList.add("error");
     error_date.textContent = "Enter a valid month.";
@@ -204,6 +150,7 @@ function validateDate(){
     error_date.classList.add("error");
     error_date.textContent = "Enter a valid date.";
   }
+  return false;
 }
 
 function validateMonth (value){
@@ -216,7 +163,7 @@ function validateYear (value){
   return regexPattern.test(value); 
 }
 
-function ValidateCreditCardNumber() {
+function validateCreditCardNumber() {
   let value = cardholder_number.value;
   let ccNum = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
   console.log(ccNum);
@@ -238,20 +185,7 @@ function ValidateCreditCardNumber() {
     isValid = true;
   }
 
-  if (isValid) {
-    console.log("Thank You!");
-    cardholder_number.classList = null;
-    cardholder_number.classList.add("input-success");
-    cardholder_number_error.classList = null;
-    cardholder_number_error.classList.add("hidden");
-  } else {
-    console.log("Wrong format, numbers only.");
-    cardholder_number.classList = null;
-    cardholder_number.classList.add("error-input");
-    cardholder_number_error.classList = null;
-    cardholder_number_error.classList.add("error");
-    cardholder_number_error.innerText = "Wrong number, enter a valid credit card";
-  }
+  return isValid;
 }
 
 function cc_format(value) {
@@ -274,4 +208,11 @@ function cc_format(value) {
 function validateCvc(value) {
   const regex = /^(0{1,2}[0-9]{1}|[1-9][0-9]{2})$/;
   return regex.test(value);
+}
+
+function validateCardHolderName(element){
+  if (element.value.length >= 4 || element.value.length === 0){
+    let regexPattern = /^(?:[A-Za-z]+ ?){1,3}$/;
+    return regexPattern.test(element.value);
+  }
 }
