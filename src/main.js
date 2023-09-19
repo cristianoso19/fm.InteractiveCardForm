@@ -25,8 +25,10 @@ cardholder_number.addEventListener('focusout',()=>{
 form.addEventListener('submit', (e)=>{
   e.preventDefault();
   if (validateForm()) {
-    document.querySelector('form').classList.add('hidden');
-    success.classList.replace('hidden','block');
+    document.querySelector('form').classList.add('fade-out');
+    // document.querySelector('form').classList.add('hidden');
+    success.classList.remove('hidden');
+    success.classList.add('fade-in');
   }
 });
 
