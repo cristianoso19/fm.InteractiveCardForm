@@ -18,6 +18,9 @@
         background-origin: border-box;
         background-clip: padding-box, border-box;
     }
+    .card-shadow {
+        filter: drop-shadow(13px 13px 20px rgba(0,0,0,0.3));
+    }
 }
 @layer utilities {
        .float-card {
@@ -58,3 +61,4 @@
 .error-input {
     @apply text-lg mt-2 px-4 tracking-wide border rounded-lg w-full h-11 border-red focus:outline-none focus:border focus:border-red
 }
+

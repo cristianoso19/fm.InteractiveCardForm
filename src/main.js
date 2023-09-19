@@ -20,7 +20,6 @@ cardholder_number.addEventListener('input', ()=>{
 });
 cardholder_number.addEventListener('focusout',()=>{
   reviewCardholderNumber();
-  card_number.textContent = cardholder_number.value;
 });
 
 form.addEventListener('submit', (e)=>{
@@ -32,15 +31,19 @@ form.addEventListener('submit', (e)=>{
 });
 
 function validateForm(){
-  if (!(reviewCardholderName() ||
-    reviewCardholderNumber() ||
-    reviewCardholderMonth() ||
-    reviewCardholderYear() ||
+  const conditions = [
+    reviewCardholderName(), 
+    reviewCardholderNumber(), 
+    reviewCardholderMonth(), 
+    reviewCardholderYear(), 
     reviewCvc()
-  )){
-    return false;
-  }else{
+  ];
+  const allConditionsMet = conditions.every(condition => condition === true);
+
+  if (allConditionsMet){
     return true;
+  }else{
+    return false;
   }
 }
 
@@ -83,11 +86,11 @@ function reviewCardholderName(){
   cardholder_name.value = cardholder_name.value.toUpperCase();
   if (validateCardHolderName(cardholder_name)){
     setSuccess(cardholder_name);
+    card_name.textContent = cardholder_name.value;
     return true;
   } else {
     setError(cardholder_name,"Wrong name, letters only");
   }
-  card_name.textContent = cardholder_name.value;
   return false;
 }
 
@@ -95,6 +98,7 @@ function reviewCardholderNumber(){
   if (validateCreditCardNumber()) {
     console.log("Thank You!");
     setSuccess(cardholder_number); 
+    card_number.textContent = cardholder_number.value;
     return true;
   } else {
     console.log("Wrong format, numbers only.");
