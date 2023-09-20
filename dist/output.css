@@ -639,6 +639,9 @@ video {
 .w-screen {
   width: 100vw;
 }
+.w-80 {
+  width: 20rem;
+}
 .grid-cols-1 {
   grid-template-columns: repeat(1, minmax(0, 1fr));
 }
@@ -895,6 +898,12 @@ video {
         filter: drop-shadow(13px 13px 20px rgba(0,0,0,0.2));
     }
 }
+@media (min-width: 575px) {
+
+  .sm\:w-80 {
+    width: 20rem;
+  }
+}
 @media (min-width: 759px) {
 
   .md\:max-w-md {
@@ -975,6 +984,10 @@ video {
 
   .lg\:w-\[25rem\] {
     width: 25rem;
+  }
+
+  .lg\:w-96 {
+    width: 24rem;
   }
 
   .lg\:max-w-screen-lg {
